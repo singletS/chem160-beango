@@ -1,0 +1,70 @@
+# Compiler objects, modules, and executables
+*.o
+*.[oa]
+*.mod
+*.x
+Modules/version.f90
+
+# Makefile noise
+Makefile.in
+Makefile
+make.sys
+
+# Configure stuff
+config.h.in
+config.log
+config.status
+config.system
+configure
+configure.lineno
+iotk
+configure.msg
+install/make_blas.inc
+install/make_lapack.inc
+install/make_wannier90.sys
+include/c_defs.h
+include/fft_defs.h
+
+# Binary directory
+bin/
+clib/
+flib/
+S3DE/
+
+# MacOS Bullshit
+.DS_Store
+
+# Latex crap
+*.aux
+*.glo
+*.idx
+*.log
+*.toc
+*.ist
+*.acn
+*.acr
+*.alg
+*.bbl
+*.blg
+*.dvi
+*.glg
+*.gls
+*.ilg
+*.ind
+*.lof
+*.lot
+*.maf
+*.mtc
+*.mtc1
+*.out
+*.synctex.gz
+
+# iPython
+*.py[co]
+__pycache__
+*.egg-info
+*~
+*.bak
+.ipynb_checkpoints
+.tox
+.DS_Store
