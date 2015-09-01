@@ -12,21 +12,27 @@
 
 In this course you'll get a sense of how quantum mechanics is used to solved chemistry problems.
 One of the ways we will get to understand the quantum world will be via code, we will be coding many of the ideas in the course and creating simulations that solve quantum phenomena.
-We will primarily use Ipython notebooks, a great tool for sharing code, running calculations and
+We will primarily use Ipython notebooks, a great tool for sharing code, rapidly prototyping ideas, telling stories with multiple media.
 
-For the first part of the course we will use common scientific python libraries that are included in any anaconda installation.
+For the first part of the course we will use common scientific python libraries that are common in many python installations.
 
-Later we will use specialized modules and software that is normally used in a professional setting. Since there is a wide variety of computer environments, we have a created virtual boxes which contain all the software required for the course.
+Later we will use specialized modules and software that is normally used in a professional setting (indsutry, research, etc.). Since there is a wide variety of computer environments, we have a created virtual boxes which contain all the software required for the course.
 
 ## Requirements
 
+### Essentials:
 * Internet Browser, **Google Chrome** highly recommended.
-* [Python **2.7.x**](https://www.python.org/downloads/)
 * A terminal (MacOSX and Linux have native *good* terminals, for Windows [cmder](http://cmder.net/) is recommended)
 * [VirtualBox **5.X**](https://www.virtualbox.org/wiki/Downloads) with the Extension pack.
+* A sense of scientific adventure!
+
+### Behind the hood:
+(Inside the virtual machines)
+
+* [Python **2.7.x**](https://www.python.org/downloads/)
 * [Ipython notebook](http://ipython.org/notebook.html) > **3.x** , we will use **4.x** also known as [Jupyter](https://jupyter.org)
 * Modules: **[scipy](http://www.scipy.org/), [numpy](http://www.numpy.org/), [matplotlib](http://matplotlib.org/).**
-* Chemistry modules: **[rdkit](http://www.rdkit.org/), [openbabel](http://openbabel.org/), [imolecule](http://patrick-fuller.com/imolecule/), [PyQuante](http://pyquante.sourceforge.net/).**
+* Chemistry modules: **[rdkit](http://www.rdkit.org/), [openbabel](http://openbabel.org/), [imolecule](http://patrick-fuller.com/imolecule/), [PyQuante](http://pyquante.sourceforge.net/), [OpenMM](http://openmm.org/).**
 
 ## Installation guide
 Installing all the required software can be hard if you have never compiled code, hence we will rely on the virtual machines for any code related activities.
@@ -50,7 +56,7 @@ Just to note: In a Linux based computer it is relatively easy to install all the
 ### **3**  Starting ipython notebook within your vbox
 It should look like the following image:
 ![](extra/files/programs.png)
-From here do:
+From here:
 * Open a terminal by clicking on the icon.
 * Type the command **ipython notebook** and press enter, the ipython notebook should be running.
 * Open google-chrome.
@@ -65,9 +71,9 @@ You can enter a folder by clicking on it.
 * You can update this code repository by running "**update-course**", so any time you need to download the latest problem sets, execute away!
 
 ### **4** Headless Virtualbox (optional but **recommended**)
-If you feel your virtual machine is a bit slow, it is possible to run the virtual machine in *headless* mode, with no graphics. Sort of like a calculation server.
+If you feel your virtual machine is a bit slow, it is possible to run the virtual machine in *headless* mode, with means no graphical interface. Sort of like a calculation server.
 
-You will run the code on the virtualbox...but all graphics rendering will happen on your computer inside of a web browser.
+In this mode you will run the code on the virtualbox...but all graphics rendering and notebook editing will happen on your computer inside of a web browser.
 
 #### 4.1 : Bootup your virtual machine in headless mode
 
