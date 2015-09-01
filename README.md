@@ -1,3 +1,4 @@
+​​
 # Welcome to the Chem160 code repository
 
 *   Overview
@@ -13,9 +14,9 @@ In this course you'll get a sense of how quantum mechanics is used to solved che
 One of the ways we will get to understand the quantum world will be via code, we will be coding many of the ideas in the course and creating simulations that solve quantum phenomena.
 We will primarily use Ipython notebooks, a great tool for sharing code, running calculations and
 
-For the first part of the course we will use common scientific python libraries that are included in any anaconda instalation.
+For the first part of the course we will use common scientific python libraries that are included in any anaconda installation.
 
-Later we will use specialized modules and software that is normally used in a professional setting. Since there is a wide variety of computer enviroments, we have a created virtualboxes which contain all the software required for the course.
+Later we will use specialized modules and software that is normally used in a professional setting. Since there is a wide variety of computer environments, we have a created virtual boxes which contain all the software required for the course.
 
 ## Requirements
 
@@ -129,7 +130,7 @@ Host chem160-box64
 ```
 
 ## Want to run stuff on your computer?
-Again! Only recommend if you like to suffer or would like to learn how to compile code / setup enviroments. Most of the work can be done via the Anaconda scientific python distribution.
+Again! Only recommend if you like to suffer or would like to learn how to compile code / setup environments. Most of the work can be done via the Anaconda scientific python distribution.
 
 [![](https://store.continuum.io/static/img/anaconda_logo_web.png)](http://continuum.io/downloads#all)
 
@@ -138,7 +139,7 @@ But installing properly openbabel and rdkit can be a bit more complicated, espec
 The overall steps are:
 
 * Download and install Anaconda (easy)
-* Update all packages via the termianl command **"conda update --all"**
+* Update all packages via the terminal command **"conda update --all"**
 * Probably install **"conda install anaconda-client"**
 * Install also: **"conda install ipython notebook ipywidgets"**
 * Install via [conda bisntar](https://binstar.org/) **rdkit, openbabel and imolecule**. If you are in luck somebody already installed them...if not..you will have to download and compile code.
