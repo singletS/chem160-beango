@@ -50,19 +50,19 @@ Just to note: In a Linux based computer it is relatively easy to install all the
 
 ### **2**  Copy your virtual drive
 
-![](extra/files/virtualbox.png)
+![](http://imgur.com/f2mySZT)
 
 
 ### **3**  Starting ipython notebook within your vbox
 It should look like the following image:
-![](extra/files/programs.png)
+![](http://imgur.com/tpWNP3x)
 From here:
 * Open a terminal by clicking on the icon.
 * Type the command **ipython notebook** and press enter, the ipython notebook should be running.
 * Open google-chrome.
 * Type **localhost:8888** in the address bar.
 * You should see something like the following screen:
-![](/extra/files/jupyter.png)
+![](http://imgur.com/EfzyhMP)
 Here you can navigate the files on the computer, you will be using the chem160 folder as a home base for all code (problem sets, demos, extra stuff).
 You can enter a folder by clicking on it.
 
@@ -77,10 +77,10 @@ In this mode you will run the code on the virtualbox...but all graphics renderin
 
 #### 4.1 : Bootup your virtual machine in headless mode
 
-![](extra/files/headless.png)
+![](http://imgur.com/181R2IL)
 #### 4.2 : Open a terminal and connect via ssh
 
-![](extra/files/sshterm.png)
+![](http://imgur.com/VkzCGVz)
 
 You can explore this windowless computer via ssh in a terminal window, using the following command:
 
@@ -89,18 +89,18 @@ ssh -p 3032 student@127.0.0.1
 ```
 
 If all was succesful you will see a message like this:
-![](extra/files/termlog.png)
+![](http://imgur.com/7gXxuoC)
 Now you have total control over the virtual machine...from there you can start an ipython server by typing
 
 ```bash
 ipython-server
 ```
 #### 4.3 : Open a google-chrome into localhost:8888
-![](extra/files/localhost.png)
+![](http://imgur.com/cUHPaL6)
 
 ** Voila!** Jupyter is alive! (remotely)
 
-![](extra/files/jupyter_remote.png)
+![](http://imgur.com/gs5te5J)
 
 
 #### Extras: Copying files, updating the course
