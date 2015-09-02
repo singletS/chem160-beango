@@ -70,7 +70,7 @@ You can enter a folder by clicking on it.
 * Run the code! This will test if you have all the required modules for the course.
 * You can update this code repository by running "**update-course**", so any time you need to download the latest problem sets, execute away!
 
-### **4** Headless Virtualbox (optional but **recommended**)
+### **4** Headless Virtualbox (Highly **recommended**)
 If you feel your virtual machine is a bit slow, it is possible to run the virtual machine in *headless* mode, with means no graphical interface. Sort of like a calculation server.
 
 In this mode you will run the code on the virtualbox...but all graphics rendering and notebook editing will happen on your computer inside of a web browser.
