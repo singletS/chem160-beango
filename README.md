@@ -70,7 +70,7 @@ The default app in MacOSX is "Terminal", you can find it via the spotlight bar o
 #### Windows
 Windows comes with two applications for command line purposes **Command Prompt** and **PowerShell**. Sometimes they do have ssh. A sure option is **Git Bash for Windows**, downloadable here:
 
-[![Git Bash](https://git-scm.com/images/logo@2x.png)](https://git-for-windows.github.io/)
+[![Git Bash](https://git-for-windows.github.io/img/gwindows_logo.png**)](https://git-for-windows.github.io/)
 
 ### Does it have ssh?
 Once open, run the following command:
@@ -90,7 +90,7 @@ No worries, check out this [great introductory blog post.](https://www.codecadem
 The virtual machine is a [Lubuntu](http://lubuntu.net/) 15.04 disk image, loaded with a bare minimum graphical interface plus course software. The image can hold up to 15 GB of storage. By default it is setup to use 2GBs of RAM and 64 MBs of video memory.
 
 #### The default password for each machine is <font size=6 color="green"> chem160</font>.
-A copy of the virtual machine can be obtained from any of the TAs o via the following link:[link](link).
+A copy of the virtual machine can be obtained from any of the TAs o via the [following link.](https://mega.nz/#!q4EjhAIT!OAC-vZHFb9W5StdFJ8Nn-cswUCkYqO8Jy2Akr3wKt90).
 
 ### 5 - Molecular Viewer
 
@@ -174,7 +174,17 @@ __ Note: __ If by any chance you have problems updating... you can also delete t
 ```bash
 rm -rf chem160
 ```
-Once you have a problem set to work with, you should make a copy soemwhere and work on that.
+Once you have a problem set to work with, you should make a copy somewhere and work on that.
+
+#### Alternative: Git clone the bitbucket repository
+You can download all code related files by running the following command in a git enabled terminal:
+
+```bash
+git clone https://beangoben@bitbucket.org/beangoben/chem160.git
+```
+If you do not have git on your computer you can install it on your computer via:
+
+[![Github](https://git-scm.com/images/logo@2x.png) ](https://git-scm.com/downloads)
 
 ### Submitting Homework
 To submit your homework, create a folder named **lastname_firstinitial_hw#** and place your IPython notebooks, data files, and any other files in this folder.
