@@ -90,6 +90,14 @@ The virtual machine is a [Lubuntu](http://lubuntu.net/) 15.04 disk image, loaded
 #### The default password for each machine is <font size=6 color="green"> chem160</font>.
 A copy of the virtual machine can be obtained from any of the TAs o via the following link:[link](link).
 
+### 5 - Molecular Viewer
+
+[![](http://www.ks.uiuc.edu/Research/vmd/images/vmd_logo_left.gif)](http://www.ks.uiuc.edu/Research/vmd/)
+
+[![](https://upload.wikimedia.org/wikipedia/commons/c/c1/Avogadro.png)](http://avogadro.cc/wiki/Main_Page)
+
+
+
 ## Working with the virtual machines:
 ### *Step 1 :* Start up your virtualbox!
 Duoble clink on the download .ova file and it will appear on your virtualbox screen, there just do start:
