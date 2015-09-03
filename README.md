@@ -28,6 +28,8 @@ A great way to become highly proficient in python fast is taking the [python cod
 - Internet Browser, **Google Chrome** highly recommended.
 - A terminal with ssh (MacOSX and Linux have native _good_ terminals, for Windows [cmder](http://cmder.net/) is recommended)
 - [VirtualBox **5.X**](https://www.virtualbox.org/wiki/Downloads) with the Extension pack.
+*   [VMD]([http://www.ks.uiuc.edu/Research/vmd/](http://www.ks.uiuc.edu/Research/vmd/)) or [Avogadro]([http://avogadro.cc/wiki/Main_Page](http://avogadro.cc/wiki/Main_Page)) if you want to visualize molecules.
+
 - A sense of scientific adventure!
 
 ### Behind the hood:
@@ -36,7 +38,7 @@ A great way to become highly proficient in python fast is taking the [python cod
 - [Python **2.7.x**](https://www.python.org/downloads/)
 - [Ipython notebook](http://ipython.org/notebook.html) > **3.x** , we will use **4.x** also known as [Jupyter](https://jupyter.org)
 - Modules: **[scipy](http://www.scipy.org/), [numpy](http://www.numpy.org/), [matplotlib](http://matplotlib.org/).**
-- Chemistry modules: **[rdkit](http://www.rdkit.org/), [openbabel](http://openbabel.org/), [imolecule](http://patrick-fuller.com/imolecule/), [PyQuante](http://pyquante.sourceforge.net/), [OpenMM](http://openmm.org/).**
+- Chemistry modules: **[rdkit](http://www.rdkit.org/), [openbabel](http://openbabel.org/), [imolecule](http://patrick-fuller.com/imolecule/), [PyQuante](http://pyquante.sourceforge.net/), [OpenMM](http://openmm.org/), [chelabview](http://chemlab.github.io/chemlab/), [mdtraj](http://mdtraj.org/latest/).**
 
 ## Installation guide
 Installing all the required software can be hard if you have never compiled code, hence we will rely on the virtual machines for any code related activities.
