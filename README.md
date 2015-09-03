@@ -20,9 +20,15 @@ Later we will use specialized modules and software that is normally used in a pr
 
 ### First time programming?
 No worries! This course is made for people of all skill levels. Having said that, the more you can program the more you can focus on learning the quantum chemistry part of it.
+<<<<<<< HEAD
 
 A great way to become highly proficient in python fast is taking the [python code academy course](https://www.codecademy.com/en/tracks/python). High schoolers typically finish the course in 13 hours (average).
 
+=======
+
+A great way to become highly proficient in python fast is taking the [python code academy course](https://www.codecademy.com/en/tracks/python). High schoolers typically finish the course in 13 hours (average).
+
+>>>>>>> fb1f4b82a62a94edec82ba11c9782919d4e3dfca
 ## Requirements
 ### Essentials:
 - Internet Browser, **Google Chrome** highly recommended.
@@ -44,11 +50,17 @@ Installing all the required software can be hard if you have never compiled code
 If *you are interested in setting up software for your computer we can offer guidance *, <font color="red"> but we will only offer dedicated support to VirtualBox problems.</font>
 
 Remember we need three main components:
+<<<<<<< HEAD
 
 ### 1 - Install VirtualBox version 5.x
 ##### (click me)
 
 [![Virtual Box](https://box.scotch.io/banner-virtual-box.jpg)](https://www.virtualbox.org/)
+=======
+
+### 1 - Install VirtualBox version 5.x
+(click me)[![Virtual Box](https://box.scotch.io/banner-virtual-box.jpg)](https://www.virtualbox.org/)
+>>>>>>> fb1f4b82a62a94edec82ba11c9782919d4e3dfca
 
 #### Don't forget the VirtualBox Extensions Pack (it's on the same page)
 Internet Browser, Google Chrome highly recommended. A terminal (MacOSX and Linux have native good terminals, for Windows cmder is recommended) VirtualBox 5.X with the Extension pack. A sense of scientific adventure!
@@ -80,6 +92,7 @@ ssh -V
 should give information on the ssh version, something like this:
 
 ![](http://i.imgur.com/k4lY9Cu.png)
+<<<<<<< HEAD
 
 ### Never used a Terminal?
 No worries, check out this [great introductory blog post.](https://www.codecademy.com/blog/72-getting-comfortable-in-the-terminal-linux) and if you want to be a pro really fast check out [the code academy course](https://www.codecademy.com/en/courses/learn-the-command-line/lessons/navigation/exercises/your-first-command?action=resume).
@@ -90,21 +103,38 @@ The virtual machine is a [Lubuntu](http://lubuntu.net/) 15.04 disk image, loaded
 #### The default password for each machine is <font size=6 color="green"> chem160</font>.
 A copy of the virtual machine can be obtained from any of the TAs o via the following link:[link](link).
 
+=======
+
+### Never used a Terminal?
+No worries, check out this [great introductory blog post.](https://www.codecademy.com/blog/72-getting-comfortable-in-the-terminal-linux) and if you want to be a pro really fast check out [the code academy course](https://www.codecademy.com/en/courses/learn-the-command-line/lessons/navigation/exercises/your-first-command?action=resume).
+
+### 4 - Copy of the virtual machine
+The virtual machine is a [Lubuntu](http://lubuntu.net/) 15.04 disk image, loaded with a bare minimum graphical interface plus course software. The image can hold up to 15 GB of storage. By default it is setup to use 2GBs of RAM and 64 MBs of video memory.
+
+#### The default password for each machine is <font size=6 color="green"> chem160</font>.
+A copy of the virtual machine can be obtained from any of the TAs o via the following link:[link](link).
+
+>>>>>>> fb1f4b82a62a94edec82ba11c9782919d4e3dfca
 ## Working with the virtual machines:
 ### *Step 1 :* Start up your virtualbox!
 Duoble clink on the download .ova file and it will appear on your virtualbox screen, there just do start:
 
 ![](http://i.imgur.com/u3eTTpR.png)
 
+<<<<<<< HEAD
 After some loading you should arrive to this screen, with convenient shortcuts to our most useful programs:
 
 ![](http://imgur.com/tpWNP3x.png)
+=======
+After some loading you should arrive to this screen, with convenient shortcuts to our most useful programs: ![](http://imgur.com/tpWNP3x.png)
+>>>>>>> fb1f4b82a62a94edec82ba11c9782919d4e3dfca
 
 ### *Step 2 :* Starting ipython notebook within your vbox
 - Open a terminal by clicking on the terminal icon.
 - Type **ipython notebook** and press enter, you will get some messages and the ipython notebook should start running.
 - Open google-chrome.
 - Type **localhost:8888** in the address bar.
+<<<<<<< HEAD
 
 
 You should see something like the following screen:
@@ -113,6 +143,9 @@ You should see something like the following screen:
 
 Here you can navigate the files on the computer, you will be using the chem160 folder as a base for all code (problem sets, demos, extra stuff). You can enter a folder by clicking on it.
 
+=======
+- You should see something like the following screen: ![](http://imgur.com/EfzyhMP.png) Here you can navigate the files on the computer, you will be using the chem160 folder as a base for all code (problem sets, demos, extra stuff). You can enter a folder by clicking on it.
+>>>>>>> fb1f4b82a62a94edec82ba11c9782919d4e3dfca
 - Navigate to **chem160/extras/TestInstallation.ipynb**
 - Run the code! This will test if you have all the required modules for the course.
 - You can update this code repository by runningthe terminal command "**update-course**", so any time you need to download the latest problem sets, execute away!
@@ -135,11 +168,15 @@ You can explore this windowless computer via ssh in a terminal window, using the
 ssh -p 3032 student@127.0.0.1
 ```
 
+<<<<<<< HEAD
 You might get a message asking if it is a secure connection, it is, type yes and enter. Remember the password for the machine is <font size=6 color="green">chem160</font>.If all was successful you will see a similar message:
 
 ![](http://imgur.com/7gXxuoC.png)
 
 Now you have total control over the virtual machine...from there you can start an ipython server by typing
+=======
+You might get a message asking if it is a secure connection, it is, type yes and enter. Remember the password for the machine is <font size=6 color="green">chem160</font>.If all was successful you will see a similar message: ![](http://imgur.com/7gXxuoC.png) Now you have total control over the virtual machine...from there you can start an ipython server by typing
+>>>>>>> fb1f4b82a62a94edec82ba11c9782919d4e3dfca
 
 ```bash
 ipython-server
@@ -207,4 +244,8 @@ Host chem160-box64
     User student
     Hostname 127.0.0.1
     Port 3032
+<<<<<<< HEAD
 ```
+=======
+```
+>>>>>>> fb1f4b82a62a94edec82ba11c9782919d4e3dfca
