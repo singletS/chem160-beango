@@ -1,86 +1,133 @@
 ​​
-# Welcome to the Chem160 code repository
 
-*   Overview
-*   Requirements
-*   Installation guide:
-    * Working with the virtual machines
-    * Want to run stuff on your computer?
-*   Extra info
+# Welcome to the Chem160 code repository
+- Overview
+- Requirements
+- Installation guide
+- Working with the virtual machines
+- Updating/Downloading homework
+- Submitting homework
+- Extra info
 
 ## Overview
+In this course you'll get a sense of how quantum mechanics is used to solved chemistry problems. One of the ways we will get to understand the quantum world will be via code, we will be coding many of the ideas of the course and creating simulations that solve quantum phenomena.
 
-In this course you'll get a sense of how quantum mechanics is used to solved chemistry problems.
-One of the ways we will get to understand the quantum world will be via code, we will be coding many of the ideas in the course and creating simulations that solve quantum phenomena.
 We will primarily use Ipython notebooks, a great tool for sharing code, rapidly prototyping ideas, telling stories with multiple media.
 
 For the first part of the course we will use common scientific python libraries that are common in many python installations.
 
-Later we will use specialized modules and software that is normally used in a professional setting (indsutry, research, etc.). Since there is a wide variety of computer environments, we have a created virtual boxes which contain all the software required for the course.
+Later we will use specialized modules and software that is normally used in a professional setting (industry, research, etc.). Since there is a wide variety of computer environments (Windows, MacOSX, Linux, 32-Bit and 64-Bit...etc), we have a created virtual machines. These machines are essentially self-contained operating systems which include all the software required for the course.
+
+### First time programming?
+No worries! This course is made for people of all skill levels. Having said that, the more you can program the more you can focus on learning the quantum chemistry part of it.
+
+A great way to become highly proficient in python fast is taking the [python code academy course](https://www.codecademy.com/en/tracks/python). High schoolers typically finish the course in 13 hours (average).
 
 ## Requirements
-
 ### Essentials:
-* Internet Browser, **Google Chrome** highly recommended.
-* A terminal (MacOSX and Linux have native *good* terminals, for Windows [cmder](http://cmder.net/) is recommended)
-* [VirtualBox **5.X**](https://www.virtualbox.org/wiki/Downloads) with the Extension pack.
-* A sense of scientific adventure!
+- Internet Browser, **Google Chrome** highly recommended.
+- A terminal with ssh (MacOSX and Linux have native _good_ terminals, for Windows [cmder](http://cmder.net/) is recommended)
+- [VirtualBox **5.X**](https://www.virtualbox.org/wiki/Downloads) with the Extension pack.
+- A sense of scientific adventure!
 
 ### Behind the hood:
 (Inside the virtual machines)
 
-* [Python **2.7.x**](https://www.python.org/downloads/)
-* [Ipython notebook](http://ipython.org/notebook.html) > **3.x** , we will use **4.x** also known as [Jupyter](https://jupyter.org)
-* Modules: **[scipy](http://www.scipy.org/), [numpy](http://www.numpy.org/), [matplotlib](http://matplotlib.org/).**
-* Chemistry modules: **[rdkit](http://www.rdkit.org/), [openbabel](http://openbabel.org/), [imolecule](http://patrick-fuller.com/imolecule/), [PyQuante](http://pyquante.sourceforge.net/), [OpenMM](http://openmm.org/).**
+- [Python **2.7.x**](https://www.python.org/downloads/)
+- [Ipython notebook](http://ipython.org/notebook.html) > **3.x** , we will use **4.x** also known as [Jupyter](https://jupyter.org)
+- Modules: **[scipy](http://www.scipy.org/), [numpy](http://www.numpy.org/), [matplotlib](http://matplotlib.org/).**
+- Chemistry modules: **[rdkit](http://www.rdkit.org/), [openbabel](http://openbabel.org/), [imolecule](http://patrick-fuller.com/imolecule/), [PyQuante](http://pyquante.sourceforge.net/), [OpenMM](http://openmm.org/).**
 
 ## Installation guide
 Installing all the required software can be hard if you have never compiled code, hence we will rely on the virtual machines for any code related activities.
 
-If **you are interested in setting up software for your computer we can help**, <font color="red">but only during the first two weeks. </font> After that support will be dedicated only to VirtualBox problems.
+If *you are interested in setting up software for your computer we can offer guidance *, <font color="red"> but we will only offer dedicated support to VirtualBox problems.</font>
 
-Just to note: In a Linux based computer it is relatively easy to install all the course software. On MacOsX it is a bit more difficult. And on Windows, it's a pain.
+Remember we need three main components:
 
-## Working with the virtual machines:
-### **1** Install VirtualBox version 5.x
-(click me)
+### 1 - Install VirtualBox version 5.x
+##### (click me)
+
 [![Virtual Box](https://box.scotch.io/banner-virtual-box.jpg)](https://www.virtualbox.org/)
 
 #### Don't forget the VirtualBox Extensions Pack (it's on the same page)
+Internet Browser, Google Chrome highly recommended. A terminal (MacOSX and Linux have native good terminals, for Windows cmder is recommended) VirtualBox 5.X with the Extension pack. A sense of scientific adventure!
 
-### **2**  Copy your virtual drive
+### 2 - Internet Browser : Google-chrome
+[![google-chrome](http://i.imgur.com/4063GcI.png)](http://www.google.com/chrome/)
 
-![](extra/files/virtualbox.png)
+### 3 - Terminal with ssh capabilities
+We will be using the terminal to connect to our virtual machines remotely, this is where the ssh comes in.
+
+#### Linux
+A terminal is always installed in all Linux distributions, so should be easy to be found.
+
+#### MacOSX
+The default app in MacOSX is "Terminal", you can find it via the spotlight bar or within Apllications/Utilities.
+
+#### Windows
+Windows comes with two applications for command line purposes **Command Prompt** and **PowerShell**. Sometimes they do have ssh. A sure option is **Git Bash for Windows**, downloadable here:
+
+[![Git Bash](https://git-scm.com/images/logo@2x.png)](https://git-for-windows.github.io/)
+
+### Does it have ssh?
+Once open, run the following command:
+
+```bash
+ssh -V
+```
+
+should give information on the ssh version, something like this:
+
+![](http://i.imgur.com/k4lY9Cu.png)
+
+### Never used a Terminal?
+No worries, check out this [great introductory blog post.](https://www.codecademy.com/blog/72-getting-comfortable-in-the-terminal-linux) and if you want to be a pro really fast check out [the code academy course](https://www.codecademy.com/en/courses/learn-the-command-line/lessons/navigation/exercises/your-first-command?action=resume).
+
+### 4 - Copy of the virtual machine
+The virtual machine is a [Lubuntu](http://lubuntu.net/) 15.04 disk image, loaded with a bare minimum graphical interface plus course software. The image can hold up to 15 GB of storage. By default it is setup to use 2GBs of RAM and 64 MBs of video memory.
+
+#### The default password for each machine is <font size=6 color="green"> chem160</font>.
+A copy of the virtual machine can be obtained from any of the TAs o via the following link:[link](link).
+
+## Working with the virtual machines:
+### *Step 1 :* Start up your virtualbox!
+Duoble clink on the download .ova file and it will appear on your virtualbox screen, there just do start:
+
+![](http://i.imgur.com/u3eTTpR.png)
+
+After some loading you should arrive to this screen, with convenient shortcuts to our most useful programs:
+
+![](http://imgur.com/tpWNP3x.png)
+
+### *Step 2 :* Starting ipython notebook within your vbox
+- Open a terminal by clicking on the terminal icon.
+- Type **ipython notebook** and press enter, you will get some messages and the ipython notebook should start running.
+- Open google-chrome.
+- Type **localhost:8888** in the address bar.
 
 
-### **3**  Starting ipython notebook within your vbox
-It should look like the following image:
-![](extra/files/programs.png)
-From here:
-* Open a terminal by clicking on the icon.
-* Type the command **ipython notebook** and press enter, the ipython notebook should be running.
-* Open google-chrome.
-* Type **localhost:8888** in the address bar.
-* You should see something like the following screen:
-![](/extra/files/jupyter.png)
-Here you can navigate the files on the computer, you will be using the chem160 folder as a home base for all code (problem sets, demos, extra stuff).
-You can enter a folder by clicking on it.
+You should see something like the following screen:
 
-* Navigate to **chem160/extras/TestInstallation.ipynb**
-* Run the code! This will test if you have all the required modules for the course.
-* You can update this code repository by running "**update-course**", so any time you need to download the latest problem sets, execute away!
+ ![](http://imgur.com/EfzyhMP.png)
 
-### **4** Headless Virtualbox (optional but **recommended**)
-If you feel your virtual machine is a bit slow, it is possible to run the virtual machine in *headless* mode, with means no graphical interface. Sort of like a calculation server.
+Here you can navigate the files on the computer, you will be using the chem160 folder as a base for all code (problem sets, demos, extra stuff). You can enter a folder by clicking on it.
+
+- Navigate to **chem160/extras/TestInstallation.ipynb**
+- Run the code! This will test if you have all the required modules for the course.
+- You can update this code repository by runningthe terminal command "**update-course**", so any time you need to download the latest problem sets, execute away!
+- If by any chance you have problems updating... you can also delete the folder and re-run the command and it will download the files again.
+
+### *Step 3 :* Headless Virtualbox (**recommended**\)
+Virtual machines can be slow when running with graphical interfaces, it is possible to run the virtual machine in _headless_ mode, with means no graphical interface. Sort of like a calculation server. If you want to have super fast calculations, this is the way to go.
 
 In this mode you will run the code on the virtualbox...but all graphics rendering and notebook editing will happen on your computer inside of a web browser.
 
-#### 4.1 : Bootup your virtual machine in headless mode
+#### *Step 3.1 :* Bootup your virtual machine in headless mode
+![](http://imgur.com/181R2IL.png)
 
-![](extra/files/headless.png)
-#### 4.2 : Open a terminal and connect via ssh
-
-![](extra/files/sshterm.png)
+#### *Step 3.2 :* : Open a terminal in your computer (not the virtual) and connect via ssh
+![](http://imgur.com/VkzCGVz.png)
 
 You can explore this windowless computer via ssh in a terminal window, using the following command:
 
@@ -88,45 +135,72 @@ You can explore this windowless computer via ssh in a terminal window, using the
 ssh -p 3032 student@127.0.0.1
 ```
 
-If all was succesful you will see a message like this:
-![](extra/files/termlog.png)
+You might get a message asking if it is a secure connection, it is, type yes and enter. Remember the password for the machine is <font size=6 color="green">chem160</font>.If all was successful you will see a similar message:
+
+![](http://imgur.com/7gXxuoC.png)
+
 Now you have total control over the virtual machine...from there you can start an ipython server by typing
 
 ```bash
 ipython-server
 ```
-#### 4.3 : Open a google-chrome into localhost:8888
-![](extra/files/localhost.png)
 
-** Voila!** Jupyter is alive! (remotely)
+#### *Step 3.3 :* Open google-chrome (your computer) into localhost:8888
+![](http://imgur.com/cUHPaL6.png)
 
-![](extra/files/jupyter_remote.png)
+__ Voila!__ Jupyter is alive! (remotely)
 
+![](http://imgur.com/gs5te5J.png)
 
-#### Extras: Copying files, updating the course
+### Updating and starting problem sets
 You can update the course material via:
+
 ```bash
 update-course
 ```
-or copy a file or folder from Directory1 on the virtual box to directory2 on your machine
+
+__ Note: __ If by any chance you have problems updating... you can also delete the folder and re-run the command and it will download the files again. The command for deleting the folder (assuming you are in the home folder (**~**). **Be careful to not delete your work!**
+
+```bash
+rm -rf chem160
+```
+Once you have a problem set to work with, you should make a copy soemwhere and work on that.
+
+### Submitting Homework
+To submit your homework, create a folder named **lastname_firstinitial_hw#** and place your IPython notebooks, data files, and any other files in this folder.
+For example Garry Kenny submitting problem set 3 would be **kenny_g_hw3**".
+
+Your IPython Notebooks should be completely executed with the results visible in the notebook. We should not have to run any code. Compress the folder (please use .zip compression) and submit to the canvas site in the appropriate folder. **If we cannot access your work because these directions are not followed correctly, we will not grade your work.**
+
+You can uploaded via the browser inside of the virtual machine or you could copy your files from the virtual machine  on to your normal computer.
+
+The command to copy a file or folder from Directory1 on the virtual box to Directory2 on your machine is:
+
 ```bash
 scp -r -p 3032 student@127.0.0.1:Directory1 Directory2
 ```
-For example to copy your problem set # 1 to your current directory would be:
+
+For example to copy your problem set # 3 to your current directory would be:
 
 ```bash
-scp -r -p 3032 student@127.0.0.1:~/chem160/problem_sets/1_Intro_Ipython .
+scp -r -p 3032 student@127.0.0.1:~/chem160/problem_sets/3_problem_set .
 ```
-or reverse!, to copy a file on your computer to the virtual box:
+
+or reverse!, to copy a file from your computer to the virtual box home directory:
+
 ```bash
 scp -r -p 3032 file student@127.0.0.1:~/
 ```
-** ssh config file (Linux and MacOSX)**
-If you hate having to type *-p 3032 student@127.0.0.1* everytime you can edit your ssh config file to make the command way shorter:
+
+## Extras
+### ssh config file (Linux and MacOSX)
+If you hate having to type -p 3032 student@127.0.0.1 everytime you can edit your ssh config file to make the command way shorter:
+
 ```bash
 ssh chem160-box64
 ```
-by inserting the following code into **!/.ssh/config**:
+
+by inserting the following code into **~/.ssh/config**:
 
 ```bash
 Host chem160-box64
@@ -134,21 +208,3 @@ Host chem160-box64
     Hostname 127.0.0.1
     Port 3032
 ```
-
-## Want to run stuff on your computer?
-Again! Only recommend if you like to suffer or would like to learn how to compile code / setup environments. Most of the work can be done via the Anaconda scientific python distribution.
-
-[![](https://store.continuum.io/static/img/anaconda_logo_web.png)](http://continuum.io/downloads#all)
-
-But installing properly openbabel and rdkit can be a bit more complicated, especially if you are on Windows (openbabel is compiled for 32 bit only).
-
-The overall steps are:
-
-* Download and install Anaconda (easy)
-* Update all packages via the terminal command **"conda update --all"**
-* Probably install **"conda install anaconda-client"**
-* Install also: **"conda install ipython notebook ipywidgets"**
-* Install via [conda bisntar](https://binstar.org/) **rdkit, openbabel and imolecule**. If you are in luck somebody already installed them...if not..you will have to download and compile code.
-* Compile and Install Pyquante, it is recommend to follow the instructions [here](http://aalopes.com/blog/?p=36).
-
-## Extra info
