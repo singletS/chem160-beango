@@ -123,9 +123,9 @@ You should see something like the following screen:
 
 Here you can navigate the files on the computer, you will be using the chem160 folder as a base for all code (problem sets, demos, extra stuff). You can enter a folder by clicking on it.
 
-- Navigate to **chem160/extras/TestInstallation.ipynb**
+- Navigate to **chem160/extras/Test_Installation.ipynb**
 - Run the code! This will test if you have all the required modules for the course.
-- You can update this code repository by runningthe terminal command "**update-course**", so any time you need to download the latest problem sets, execute away!
+- You can update this code repository by running the terminal command "**update-course**", so any time you need to download the latest problem sets, execute away!
 - If by any chance you have problems updating... you can also delete the folder and re-run the command and it will download the files again.
 
 ### *Step 3 :* Headless Virtualbox (**recommended**\)
