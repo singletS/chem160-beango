@@ -28,6 +28,8 @@ A great way to become highly proficient in python fast is taking the [python cod
 - Internet Browser, **Google Chrome** highly recommended.
 - A terminal with ssh (MacOSX and Linux have native _good_ terminals, for Windows [cmder](http://cmder.net/) is recommended)
 - [VirtualBox **5.X**](https://www.virtualbox.org/wiki/Downloads) with the Extension pack.
+*   [VMD]([http://www.ks.uiuc.edu/Research/vmd/](http://www.ks.uiuc.edu/Research/vmd/)) or [Avogadro]([http://avogadro.cc/wiki/Main_Page](http://avogadro.cc/wiki/Main_Page)) if you want to visualize molecules.
+
 - A sense of scientific adventure!
 
 ### Behind the hood:
@@ -36,7 +38,7 @@ A great way to become highly proficient in python fast is taking the [python cod
 - [Python **2.7.x**](https://www.python.org/downloads/)
 - [Ipython notebook](http://ipython.org/notebook.html) > **3.x** , we will use **4.x** also known as [Jupyter](https://jupyter.org)
 - Modules: **[scipy](http://www.scipy.org/), [numpy](http://www.numpy.org/), [matplotlib](http://matplotlib.org/).**
-- Chemistry modules: **[rdkit](http://www.rdkit.org/), [openbabel](http://openbabel.org/), [imolecule](http://patrick-fuller.com/imolecule/), [PyQuante](http://pyquante.sourceforge.net/), [OpenMM](http://openmm.org/).**
+- Chemistry modules: **[rdkit](http://www.rdkit.org/), [openbabel](http://openbabel.org/), [imolecule](http://patrick-fuller.com/imolecule/), [PyQuante](http://pyquante.sourceforge.net/), [OpenMM](http://openmm.org/), [chelabview](http://chemlab.github.io/chemlab/), [mdtraj](http://mdtraj.org/latest/).**
 
 ## Installation guide
 Installing all the required software can be hard if you have never compiled code, hence we will rely on the virtual machines for any code related activities.
@@ -68,7 +70,7 @@ The default app in MacOSX is "Terminal", you can find it via the spotlight bar o
 #### Windows
 Windows comes with two applications for command line purposes **Command Prompt** and **PowerShell**. Sometimes they do have ssh. A sure option is **Git Bash for Windows**, downloadable here:
 
-[![Git Bash](https://git-scm.com/images/logo@2x.png)](https://git-for-windows.github.io/)
+[![Git Bash](https://git-for-windows.github.io/img/gwindows_logo.png**)](https://git-for-windows.github.io/)
 
 ### Does it have ssh?
 Once open, run the following command:
@@ -88,7 +90,15 @@ No worries, check out this [great introductory blog post.](https://www.codecadem
 The virtual machine is a [Lubuntu](http://lubuntu.net/) 15.04 disk image, loaded with a bare minimum graphical interface plus course software. The image can hold up to 15 GB of storage. By default it is setup to use 2GBs of RAM and 64 MBs of video memory.
 
 #### The default password for each machine is <font size=6 color="green"> chem160</font>.
-A copy of the virtual machine can be obtained from any of the TAs o via the following link:[link](link).
+A copy of the virtual machine can be obtained from any of the TAs o via the [following link.](https://mega.nz/#!q4EjhAIT!OAC-vZHFb9W5StdFJ8Nn-cswUCkYqO8Jy2Akr3wKt90).
+
+### 5 - Molecular Viewer
+
+[![](http://www.ks.uiuc.edu/Research/vmd/images/vmd_logo_left.gif)](http://www.ks.uiuc.edu/Research/vmd/)
+
+[![](https://upload.wikimedia.org/wikipedia/commons/c/c1/Avogadro.png)](http://avogadro.cc/wiki/Main_Page)
+
+
 
 ## Working with the virtual machines:
 ### *Step 1 :* Start up your virtualbox!
@@ -113,9 +123,9 @@ You should see something like the following screen:
 
 Here you can navigate the files on the computer, you will be using the chem160 folder as a base for all code (problem sets, demos, extra stuff). You can enter a folder by clicking on it.
 
-- Navigate to **chem160/extras/TestInstallation.ipynb**
+- Navigate to **chem160/extras/Test_Installation.ipynb**
 - Run the code! This will test if you have all the required modules for the course.
-- You can update this code repository by runningthe terminal command "**update-course**", so any time you need to download the latest problem sets, execute away!
+- You can update this code repository by running the terminal command "**update-course**", so any time you need to download the latest problem sets, execute away!
 - If by any chance you have problems updating... you can also delete the folder and re-run the command and it will download the files again.
 
 ### *Step 3 :* Headless Virtualbox (**recommended**\)
@@ -164,7 +174,17 @@ __ Note: __ If by any chance you have problems updating... you can also delete t
 ```bash
 rm -rf chem160
 ```
-Once you have a problem set to work with, you should make a copy soemwhere and work on that.
+Once you have a problem set to work with, you should make a copy somewhere and work on that.
+
+#### Alternative: Git clone the bitbucket repository
+You can download all code related files by running the following command in a git enabled terminal:
+
+```bash
+git clone https://beangoben@bitbucket.org/beangoben/chem160.git
+```
+If you do not have git on your computer you can install it on your computer via:
+
+[![Github](https://git-scm.com/images/logo@2x.png) ](https://git-scm.com/downloads)
 
 ### Submitting Homework
 To submit your homework, create a folder named **lastname_firstinitial_hw#** and place your IPython notebooks, data files, and any other files in this folder.
