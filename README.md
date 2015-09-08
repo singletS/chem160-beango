@@ -33,7 +33,7 @@ A great way to become highly proficient in python fast is taking the [python cod
 - A sense of scientific adventure!
 
 ### Behind the hood:
-(Inside the virtual machines)
+**Note:** You do not need to install anything of this, it is all included in the virtual machines.
 
 - [Python **2.7.x**](https://www.python.org/downloads/)
 - [Ipython notebook](http://ipython.org/notebook.html) > **3.x** , we will use **4.x** also known as [Jupyter](https://jupyter.org)
@@ -87,10 +87,20 @@ should give information on the ssh version, something like this:
 No worries, check out this [great introductory blog post.](https://www.codecademy.com/blog/72-getting-comfortable-in-the-terminal-linux) and if you want to be a pro really fast check out [the code academy course](https://www.codecademy.com/en/courses/learn-the-command-line/lessons/navigation/exercises/your-first-command?action=resume).
 
 ### 4 - Copy of the virtual machine
-The virtual machine is a [Lubuntu](http://lubuntu.net/) 15.04 disk image, loaded with a bare minimum graphical interface plus course software. The image can hold up to 15 GB of storage. By default it is setup to use 2GBs of RAM and 64 MBs of video memory.
+There are two available flavors:
+#### Flavor 1: 32-bit, no graphics, 6 GBs of storage
+The virtual machine is a [Minimal ubuntu](https://help.ubuntu.com/community/Installation/MinimalCD) 15.04 disk image, loaded with the bare minimal necesities to function as a server plus course software. By default it is setup to use 768 Mbs of RAM and 12 MBs of video memory.
 
-#### The default password for each machine is <font size=6 color="green"> chem160</font>.
-A copy of the virtual machine can be obtained from any of the TAs o via the [following link.](https://mega.nz/#!q4EjhAIT!OAC-vZHFb9W5StdFJ8Nn-cswUCkYqO8Jy2Akr3wKt90).
+[Download the 32-bit version here.](https://mega.nz/#!jhUF1RKD!KqNvb-ha-jGIgns8p_Z3HqdJBRrP46AAAGoAJ1NNSO0)
+##### Port number is <font color="green"> 3031</font>.
+
+#### Flavor 2: 64-bit, graphics, 15 GBs of storage
+The virtual machine is a [Lubuntu](http://lubuntu.net/) 15.04 disk image, loaded with a bare minimum graphical interface plus course software. By default it is setup to use 2GBs of RAM and 64 MBs of video memory.
+
+[Download the 64-bit version here.](https://mega.nz/#!q4EjhAIT!OAC-vZHFb9W5StdFJ8Nn-cswUCkYqO8Jy2Akr3wKt90)
+##### Port number is <font color="green"> 3032</font>.
+
+##### The default password for each machine is <font size=6 color="green"> chem160</font>.
 
 ### 5 - Molecular Viewer
 
@@ -136,7 +146,7 @@ In this mode you will run the code on the virtualbox...but all graphics renderin
 #### *Step 3.1 :* Bootup your virtual machine in headless mode
 ![](http://imgur.com/181R2IL.png)
 
-#### *Step 3.2 :* : Open a terminal in your computer (not the virtual) and connect via ssh
+#### *Step 3.2 :* Open a terminal in your computer (not the virtual) and connect via ssh
 ![](http://imgur.com/VkzCGVz.png)
 
 You can explore this windowless computer via ssh in a terminal window, using the following command:
@@ -144,6 +154,7 @@ You can explore this windowless computer via ssh in a terminal window, using the
 ```bash
 ssh -p 3032 student@127.0.0.1
 ```
+The **- p** part is for the port number so a **32 bit machine would be 3031.**
 
 You might get a message asking if it is a secure connection, it is, type yes and enter. Remember the password for the machine is <font size=6 color="green">chem160</font>.If all was successful you will see a similar message:
 
@@ -194,22 +205,28 @@ Your IPython Notebooks should be completely executed with the results visible in
 
 You can uploaded via the browser inside of the virtual machine or you could copy your files from the virtual machine  on to your normal computer.
 
-The command to copy a file or folder from Directory1 on the virtual box to Directory2 on your machine is:
+One easy way to download your ipynb is via the browser, going to ** file > Download as > Ipython Notebook (.ipynb) ** such as:
+
+![](http://i.imgur.com/kOHRW3M.png)
+
+The file will appear in your typical browser download folder.
+
+The command to copy a file or folder from Directory1 on the virtual box to Directory2 on your machine is, using the port number of you machine (3032 for 64 bit and 3031 for 32 bit):
 
 ```bash
-scp -r -p 3032 student@127.0.0.1:Directory1 Directory2
+scp -r -P 3032 student@127.0.0.1:Directory1 Directory2
 ```
 
 For example to copy your problem set # 3 to your current directory would be:
 
 ```bash
-scp -r -p 3032 student@127.0.0.1:~/chem160/problem_sets/3_problem_set .
+scp -r -P 3032 student@127.0.0.1:~/chem160/problem_sets/3_problem_set .
 ```
 
 or reverse!, to copy a file from your computer to the virtual box home directory:
 
 ```bash
-scp -r -p 3032 file student@127.0.0.1:~/
+scp -r -P 3032 file student@127.0.0.1:~/
 ```
 
 ## Extras
@@ -227,4 +244,11 @@ Host chem160-box64
     User student
     Hostname 127.0.0.1
     Port 3032
+```
+
+```bash
+Host chem160-box32
+    User student
+    Hostname 127.0.0.1
+    Port 3031
 ```
