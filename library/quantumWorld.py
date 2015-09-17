@@ -13,6 +13,12 @@ from Chem160_library import usefulFunctionName
 '''
 from IPython.display import HTML
 from tempfile import NamedTemporaryFile
+import numpy as np
+from scipy import misc
+from scipy.integrate import simps
+from matplotlib import pyplot as plt
+from IPython.display import HTML
+
 
 def embedVideo(afile):
     '''This function returns a HTML embeded video of a file
@@ -206,6 +212,35 @@ def ode_integrate(x0, v0, a, startTime = 0.0, stopTime = 7.0, dt = 0.01, mass = 
                                     dt,
                                     a)
     return t, xlist, mass*vlist
+
+def harmonic_oscillator_wf(x, n, m = 1.0, omega = 1.0, hbar = 1.0):
+    '''Returns the wavefunction for the 1D Harmonic Oscillator, given the following inputs:
+    INPUTS:
+        x --> a numpy array
+        n --> quantum number, an intenger
+        m --> mass (defaults to atomic units)
+        omega --> oscillator frequency, defaults to atomic units.
+        hbar --> planck's constant divided by 2*pi
+    '''
+    coeff = np.zeros((n+1, ))
+    coeff[n] = 1.0
+    prefactor = 1.0/(np.sqrt(2**n*misc.factorial(n)))*(m*omega/(np.pi*hbar))**(1.0/4.0)
+    gaussian = np.exp(-(m*omega*x*x)/(2.0*hbar))
+    hermite = np.polynomial.hermite.hermval(np.sqrt(m*omega/hbar)*x, coeff)
+    return prefactor*gaussian*hermite
+
+def harmonic_oscillator_V(x, m = 1.0, omega = 1.0, V_x0 = 0, x0 = 0):
+    '''returns the potential for the 1D Harmonic Oscillator, given the following inputs:
+    INPUTS:
+        x --> a numpy array
+        m --> mass, defaults to atomic units
+        omega --> oscillator frequency, defaults to atomic units.
+        V_x0 --> Lowest value of potential (shift in y - axis), defaults to 0
+        x0 --> x value where potential has a minimum
+
+    '''
+    V_x = V_x0 + 1.0/2.0 *m*omega**2*(x-x0)**2
+    return V_x
 
 if __name__ == "__main__":
     print("Load me as a module please")
