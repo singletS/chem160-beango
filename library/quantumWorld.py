@@ -14,11 +14,75 @@ from Chem160_library import usefulFunctionName
 from IPython.display import HTML
 from tempfile import NamedTemporaryFile
 import numpy as np
+from numpy.polynomial.hermite import hermval
 from scipy import misc
 from scipy.integrate import simps
 from matplotlib import pyplot as plt
+import matplotlib
 from IPython.display import HTML
 
+## DVR functions
+
+def tcheby(x):
+    '''Returns the kinectic operator T using chebychev polynomials
+    INPUTS:
+        x --> Grid position vector of size N
+    OUTPUT:
+        T --> value of cn at time t.
+        KEfbr -->
+        w -->
+    '''
+
+    #figure out info
+    N =len(x)
+    xmin = np.min(x)
+    xmax = np.max(x)
+    #start code
+    delta = xmax - xmin
+    w = np.zeros(N)
+    KEfbr = np.zeros(N)
+    T = np.zeros((N, N))
+    # fill T
+    for i, xp in enumerate(x):
+        w[i] = delta/(N+1.0)
+        KEfbr[i] = ((i+1.0)*np.pi/delta)**2
+        for j in range(N):
+            T[i, j] = np.sqrt(2.0/(N + 1.0))*np.sin((i + 1.0)*(j + 1.0)*np.pi/(N + 1.0))
+
+    return T, KEfbr, w
+
+
+def dvr2fb(DVR, T):
+    return np.dot(T, np.dot(DVR, T.T))
+
+
+def fb2dvr(FBR, T):
+    return np.dot(T.T, np.dot(FBR, T))
+
+
+def Hmatrix_dvr(x,vx):
+    '''Returns the Hamiltonian matrix built with DVR using chebychev polynomials.
+        Can be used along with scipy.linalg.eigh() to solve numerically
+        and get eigenvalues and eigenstates.
+    INPUTS:
+        x --> Grid position vector of size N
+        vx --> Vector of potential function evaluated at x
+
+    OUTPUT:
+        H --> An N x N matrix representing the hamiltonian operator.
+    '''
+    # constants
+    hbar = 1.0
+    m = 1.0
+    # build potential part V
+    Vdvr = np.diag(vx)
+    # build kinetic operator T
+    T, KEfbr, w = tcheby(x)
+    KEfbr = np.diag(KEfbr)*(hbar*hbar/2/m)
+    KEdvr = fb2dvr(KEfbr, T)
+    # Hamiltonian matrix
+    H = KEdvr + Vdvr
+    return H
 
 def embedVideo(afile):
     '''This function returns a HTML embeded video of a file
@@ -56,7 +120,155 @@ def embedAnimation(anim,plt,frames=20):
     return HTML(VIDEO_TAG.format(anim._encoded_video))
 
 
+#Time evolution of coefficient c_n
+def cn_t_function(cn_0, t, E, hbar = 1):
+    '''this function evolves the coefficient cn associated to an
+    eigenstate with energy E.
+    INPUTS:
+        cn_0 --> The value at t=0 of the coefficient
+        t --> a numpy array of time values.
+        E --> energy of the eigenstate associated to cn_0
+    OUTPUT:
+        cn_t --> value of cn at time t.
+    '''
+    exponent = -1j*E*t / hbar
+    cn_t = cn_0 * np.exp(exponent)
+    return cn_t
 
+#Isotropic 2D harmonic oscillator
+def harmonic_oscillator_2D(xx, yy, l, m, mass = 1.0, omega = 1.0, hbar = 1.0):
+    '''Returns the wavefunction for the 1D Harmonic Oscillator, given the following inputs:
+    INPUTS:
+        xx --> x-axis values for a 2D grid
+        yy --> y-axis values for a 2D grid
+        l --> l quantum number
+        m --> m quantum number
+        mass --> mass (defaults to atomic units)
+        omega --> oscillator frequency, defaults to atomic units.
+        hbar --> planck's constant divided by 2*pi
+    '''
+    #This is related to how the function np.polynomail.hermite.hermval
+    #works.
+    coeff_l = np.zeros((l+1, ))
+    coeff_l[l] = 1.0
+    coeff_m = np.zeros((m+1, ))
+    coeff_m[m] = 1.0
+    #Hermite polynomials required for the HO eigenfunctions
+    hermite_l = np.polynomial.hermite.hermval(np.sqrt(mass*omega/hbar)*xx, coeff_l)
+    hermite_m = np.polynomial.hermite.hermval(np.sqrt(mass*omega/hbar)*yy, coeff_m)
+    #This is the prefactors in the expression for the HO eigenfucntions
+    prefactor = (mass*omega/(np.pi*hbar))**(1.0/2.0)/(np.sqrt(2**l*2**m*misc.factorial(l)*misc.factorial(m)))
+    #And the gaussians in the expression for the HO eigenfunctions
+    gaussian = np.exp(-(mass*omega*(xx**2+yy**2))/(2.0*hbar))
+    #The eigenfunction is the product of all of the above.
+    return prefactor*gaussian*hermite_l*hermite_m
+
+
+
+def pib_momentum(p_array,L,n):
+    '''return the momentum-space wave functions for the
+    1D particle in a box.
+        p_array --> numpy array of momentum values
+        L --> size of box
+        n --> quantum number
+    '''
+    prefactor = n*np.sqrt(L*np.pi)
+    term = (1 - (-1)**n*np.exp(-1j*p_array*L)) / (n**2*np.pi**2 - L**2*p_array**2)
+    psi_p = prefactor*term
+    return psi_p
+
+def build_H_matrix(x, V_x, m = 1, h_bar = 1):
+    ''' this function builds the matrix representation of H,
+    given x, the position array, and V_x as input
+    '''
+    a = x[1] - x[0] #x is the dx of the grid.  We can get it by taking the diff of the first two
+                    #entries in x
+    t = h_bar**2 / (2 * m * a**2) # the parameter t, as defined by schrier
+
+    # initialize H_matrix as a matrix of zeros, with appropriate size.
+    H_matrix = np.zeros((len(V_x), len(V_x)))
+    for i in range(len(V_x)): #Start adding the appropriate elements to the matrix
+        ########(ONE LINE)
+        #Assignt to H_matrix[i][i],the diagonal elements of H
+        #The appropriate values
+        H_matrix[i][i] = 2*t + V_x[i]
+        #########
+        #special case, first row of H
+        if i == 0:
+            #Assignt to H_matrix[i][i+1],the off-diagonal elements of H
+            #The appropriate values, for the first row
+            H_matrix[i][i+1] = -t
+        elif i == len(V_x) - 1: #special case, last row of H
+            H_matrix[i][i-1] = -t
+        else:  # for all the other rows
+            ########(TWO LINE)
+            #Assignt to H_matrix[i][i+1], and H_matrix[i][i-1]
+            #the off-diagonal elements of H, the appropriate value, -t
+            H_matrix[i][i+1] = -t
+            H_matrix[i][i-1] = -t
+            ################
+    return H_matrix
+
+def normalize_wf(x, psi_x):
+    '''this function normalizes a wave function
+    Input --> x, numpy array of position vectors
+              psi_x, numpy array representing wave function, same length as x
+    Output:
+            wf_norm --> normalized wave function
+    '''
+    #########
+    # 1. Get integral_norm
+    integral_norm = norm_wf(x,psi_x)
+    # 2. normalize the wavefunction by dividing psi_x by the square root of integral norm.
+    #Assign to wf_norm
+    wf_norm = psi_x * np.sqrt(1.0/integral_norm)
+    ############
+    return wf_norm
+
+def norm_wf(x, psi_x):
+    '''this function returns the norm of a wave function
+    Input --> x, numpy array of position vectors
+              psi_x, numpy array representing wave function, same length as x
+    Output:
+            values --> norm of a wave function
+    '''
+    #########
+    # 1. Get the pdf associated to psi_x, assign to pdf
+    pdf = probabilityDensity(psi_x)
+    # 2. Integrate the pdf over the entire range x.  Use simps and assign to integral_norm
+    integral_norm = simps(pdf, x)
+    ############
+    return  integral_norm
+
+
+def harmonic_oscillator_wf(x, n, m = 1.0, omega = 1.0, hbar = 1.0):
+    '''Returns the wavefunction for the 1D Harmonic Oscillator, given the following inputs:
+    INPUTS:
+        x --> a numpy array
+        n --> quantum number, an intenger
+        m --> mass (defaults to atomic units)
+        omega --> oscillator frequency, defaults to atomic units.
+        hbar --> planck's constant divided by 2*pi
+    '''
+    coeff = np.zeros((n+1, ))
+    coeff[n] = 1.0
+    prefactor = 1.0/(np.sqrt(2**n*misc.factorial(n)))*(m*omega/(np.pi*hbar))**(1.0/4.0)
+    gaussian = np.exp(-(m*omega*x*x)/(2.0*hbar))
+    hermite = np.polynomial.hermite.hermval(np.sqrt(m*omega/hbar)*x, coeff)
+    return prefactor*gaussian*hermite
+
+def harmonic_oscillator_V(x, m = 1.0, omega = 1.0, V_x0 = 0, x0 = 0):
+    '''returns the potential for the 1D Harmonic Oscillator, given the following inputs:
+    INPUTS:
+        x --> a numpy array
+        m --> mass, defaults to atomic units
+        omega --> oscillator frequency, defaults to atomic units.
+        V_x0 --> Lowest value of potential (shift in y - axis), defaults to 0
+        x0 --> x value where potential has a minimum
+
+    '''
+    V_x = V_x0 + 1.0/2.0 *m*omega**2*(x-x0)**2
+    return V_x
 
 
 def probabilityDensity(psi_x):
@@ -242,6 +454,104 @@ def harmonic_oscillator_V(x, m = 1.0, omega = 1.0, V_x0 = 0, x0 = 0):
     V_x = V_x0 + 1.0/2.0 *m*omega**2*(x-x0)**2
     return V_x
 
+def my_plotting_function(x,functions_list,labels_list,title='Plot',xlab='x',ylab='f(x)',fts=12,lw=2,fs=(10,8)):
+    plt.figure(figsize=fs)
+    c=-1
+    """"" DEFINE A FUNCTION THAT RECEIVE THE FOLLOWING INPUT:
+
+    INPUTS (IN ORDER):
+        - x: array with x values
+        functions_list: list of functions you want to plot
+        labels_list: list of labels. It should have the same size as functions_list
+        title: title of the plot (Default: 'Plot')
+        xlab: name of the xlabel (default: 'x')
+        ylab: name of the ylabel (default: 'f(x)')
+        fts: fontsize for legend, axes and labels (default: 12)
+        lw: linewidth for the lines of the plot (default: 2)
+        fs: figure size (default:(10,7))
+
+    TO PLOT THE FUNCTIONS IN functions_list AS A FUNCTION OF x
+    """""
+    for f_x in functions_list:
+        c+=1
+        plt.plot(x,f_x,label=labels_list[c],linewidth=lw)
+    plt.legend(loc='center left',fontsize=fts,bbox_to_anchor=(1, 0.5))
+    plt.ylabel(ylab,fontsize=fts)
+    plt.xlabel(xlab,fontsize=fts)
+    plt.yticks(fontsize=fts)
+    plt.xticks(fontsize=fts)
+    plt.title(title,fontsize=fts)
+    plt.show()
+    return
+
+
+
+def fancy_plotting(grid=False):
+    """"" Load some fancy plot setting for matplotlib
+
+    INPUTS:
+    grid (optional) --> a boolean True or False, indicating if you want a grid.
+
+    """""
+    # Define colors here
+    dark_gray = ".15"
+    light_gray = ".8"
+    #color palete
+    colors= [(0.89411765336990356, 0.10196078568696976, 0.10980392247438431),
+ (0.21602460800432691, 0.49487120380588606, 0.71987698697576341),
+ (0.30426760128900115, 0.68329106055054012, 0.29293349969620797),
+ (0.60083047361934883, 0.30814303335021526, 0.63169552298153153),
+ (1.0, 0.50591311045721465, 0.0031372549487095253),
+ (0.99315647868549117, 0.9870049982678657, 0.19915417450315812),
+ (0.65845446095747107, 0.34122261685483596, 0.1707958535236471),
+ (0.95850826852461868, 0.50846600392285513, 0.74492888871361229),
+ (0.60000002384185791, 0.60000002384185791, 0.60000002384185791)]
+
+    style_dict = {
+            "axes.color_cycle" : colors,
+            "figure.facecolor": "white",
+            "text.color": dark_gray,
+            "axes.labelcolor": dark_gray,
+            "legend.frameon": False,
+            "legend.numpoints": 1,
+            "legend.scatterpoints": 1,
+            "xtick.direction": "out",
+            "ytick.direction": "out",
+            "xtick.color": dark_gray,
+            "ytick.color": dark_gray,
+            "axes.axisbelow": True,
+            "image.cmap": "Greys",
+            "font.family": ["sans-serif"],
+            "font.sans-serif": ["Arial", "Liberation Sans",
+                                "Bitstream Vera Sans", "sans-serif"],
+            "grid.linestyle": "-",
+            "lines.solid_capstyle": "round",
+            'font.size': 18,
+            'axes.titlesize': 'Large',
+            'axes.labelsize': 'medium',
+            'xtick.labelsize': 'medium',
+            'ytick.labelsize': 'medium',
+            'figure.figsize': (10, 5),
+            "axes.facecolor": "white",
+            "axes.edgecolor": dark_gray,
+            "axes.linewidth": 2,
+            "grid.color": light_gray,
+            "legend.fancybox":True,
+            "lines.linewidth" : 2
+            }
+
+    if grid:
+         style_dict.update({
+                "axes.grid":True,
+                "axes.facecolor": "white",
+                "axes.edgecolor": light_gray,
+                "axes.linewidth": 1,
+                "grid.color": light_gray,
+            })
+
+    matplotlib.rcParams.update(style_dict)
+
+    return
+
 if __name__ == "__main__":
     print("Load me as a module please")
-
