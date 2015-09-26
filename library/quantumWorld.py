@@ -220,7 +220,7 @@ def build_H_matrix(x, V_x, m=1, h_bar=1):
     return H_matrix
 
 
-def normalize_wf(x ,psi_x, dvr=False):
+def normalize_wf(x, psi_x, dvr=False):
     '''this function normalizes a wave function
     Input -->
             x, numpy array of position vectors
@@ -533,7 +533,8 @@ def my_plotting_function(x, functions_list, labels_list, title='Plot', xlab='x',
 
 
 def fancy_plotting(grid=False):
-    """"" Load some fancy plot setting for matplotlib
+    """"" Load some fancy plot setting for matplotlib.
+    You only have to load it once.
 
     INPUTS:
     grid (optional) --> a boolean True or False, indicating if you want a grid.
