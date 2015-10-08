@@ -17,12 +17,62 @@ import numpy as np
 from numpy.polynomial.hermite import hermval
 from scipy import misc
 from scipy.integrate import simps
+import scipy.sparse as sparse
+import scipy.sparse.linalg
 from matplotlib import pyplot as plt
 import matplotlib
 from IPython.display import HTML
 
 # DVR functions
 
+
+def forwardcn(psi, A, Ad):
+    '''
+    This method takes one step forward using the crank nicholson propagator. As promised, it uses the sparse solver
+    to find where A \psi(t + dt) = A^\dagger \psi(t)
+    INPUTS:
+     psi --> wavefunction vector
+     A -> propagator operator
+     Ad -> Adjoint of A
+    '''
+    psi = sparse.linalg.spsolve(A, Ad * psi)
+    return psi
+
+
+def sparse_V(x, vx,hbar,c):
+    '''
+    This method just returns a sparse diagonal matrix with the potential on the diagonals
+    INPUTS:
+    x --> grid vector
+    vx --> potential evaluated at the grid vector
+    hbar -> planks constant
+    c -> speed of light
+    '''
+    nx = len(x)
+    k2 = (1j * c) / hbar
+
+    V_diags = [0]
+    V = k2 * sparse.spdiags(vx, V_diags, nx, nx)
+    I = sparse.identity(nx)
+    return V, I
+
+def sparse_T(x,hbar,m,c):
+    '''
+    THis method just returns the tridiagonal kinetic energy.
+    NPUTS:
+    x --> grid vector
+    hbar -> planks constant
+    m -> mass of expected particle
+    c -> speed of light
+    '''
+    DX = x[1]-x[0]
+    nx = len(x)
+    prefactor = -(1j*hbar*c)/(2.*m)
+    data = np.ones((3, nx))
+    data[1] = -2*data[1]
+    diags = [-1,0,1]
+    D2 = prefactor / DX**2 * sparse.spdiags(data,diags,nx,nx)
+    return D2
 
 def tcheby(x):
     '''Returns the kinectic operator T using chebychev polynomials
