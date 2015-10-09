@@ -19,7 +19,7 @@ from scipy import misc
 from scipy.integrate import simps
 import scipy.sparse as sparse
 import scipy.sparse.linalg
-from matplotlib import pyplot as plt
+import matplotlib.pyplot as plt
 import matplotlib
 from IPython.display import HTML
 
@@ -39,9 +39,10 @@ def forwardcn(psi, A, Ad):
     return psi
 
 
-def sparse_V(x, vx,hbar,c):
+def sparse_V(x, vx, hbar, c):
     '''
-    This method just returns a sparse diagonal matrix with the potential on the diagonals
+    This method just returns a sparse diagonal matrix with the potential
+    on the diagonals and a Identity matrix of the same size.
     INPUTS:
     x --> grid vector
     vx --> potential evaluated at the grid vector
@@ -56,23 +57,27 @@ def sparse_V(x, vx,hbar,c):
     I = sparse.identity(nx)
     return V, I
 
-def sparse_T(x,hbar,m,c):
+
+def sparse_T(x, hbar, m, c):
     '''
-    THis method just returns the tridiagonal kinetic energy.
+    This method just returns the tridiagonal kinetic energy.
+    It is the finite difference kinetic matrix we all know and love
+    but it is incoded in a sparse matrix.
     NPUTS:
     x --> grid vector
     hbar -> planks constant
     m -> mass of expected particle
     c -> speed of light
     '''
-    DX = x[1]-x[0]
+    DX = x[1] - x[0]
     nx = len(x)
-    prefactor = -(1j*hbar*c)/(2.*m)
+    prefactor = -(1j * hbar * c) / (2. * m)
     data = np.ones((3, nx))
-    data[1] = -2*data[1]
-    diags = [-1,0,1]
-    D2 = prefactor / DX**2 * sparse.spdiags(data,diags,nx,nx)
+    data[1] = -2 * data[1]
+    diags = [-1, 0, 1]
+    D2 = prefactor / DX**2 * sparse.spdiags(data, diags, nx, nx)
     return D2
+
 
 def tcheby(x):
     '''Returns the kinectic operator T using chebychev polynomials
