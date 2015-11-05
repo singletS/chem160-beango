@@ -22,6 +22,29 @@ import scipy.sparse.linalg
 import matplotlib.pyplot as plt
 import matplotlib
 from IPython.display import HTML
+from PyQuante.Constants import ang2bohr
+import imolecule
+from PyQuante import Ints
+from PyQuante.Ints import getbasis
+from PyQuante.Molecule import Molecule
+
+from chemview import MolecularViewer
+from chemlab.qc import molecular_orbital
+
+# pyquante functions
+
+
+def visualize_Mol(molecule, angstroms=True):
+    mol = molecule.copy()
+    # convert angstrom to bohr
+    if angstroms:
+        for atom in mol:
+            coords = [a / ang2bohr for a in atom.pos()]
+            atom.update_coords(coords)
+    # create as xyz string
+    xyz_str = mol.as_string()
+    return imolecule.draw(xyz_str, format='xyz', shader="phong")
+
 
 # DVR functions
 
@@ -246,7 +269,7 @@ def build_H_matrix(x, V_x, m=1, h_bar=1):
     '''
     a = x[
         1] - x[0]  # x is the dx of the grid.  We can get it by taking the diff of the first two
-    #entries in x
+    # entries in x
     t = h_bar ** 2 / (2 * m * a ** 2)  # the parameter t, as defined by schrier
 
     # initialize H_matrix as a matrix of zeros, with appropriate size.
@@ -622,7 +645,7 @@ def fancy_plotting(grid=False):
         "xtick.color": dark_gray,
         "ytick.color": dark_gray,
         "axes.axisbelow": True,
-        "image.cmap": "Greys",
+        "image.cmap": "YlGn",
         "font.family": ["sans-serif"],
         "font.sans-serif": ["Arial", "Liberation Sans",
                             "Bitstream Vera Sans", "sans-serif"],
@@ -684,6 +707,172 @@ def display_video(video_file):
 
     return HTML(VIDEO_TAG.format(video_file))
 
+
+def display_matrix(M):
+    from IPython.display import Latex
+    mat_str = "\\\\\n".join(
+        [" & ".join(map('{0:.3f}'.format, line)) for line in M])
+    Latex(r"""\[ \begin{bmatrix} %s \end{bmatrix} \] """ % mat_str)
+    return Latex
+
+
+def power2sym(powers):
+    sym = 'Error'
+    if powers in [(0, 0, 0)]:
+        sym = 'S'
+    if powers in [(1, 0, 0), (0, 1, 0), (0, 0, 1)]:
+        sym = 'P'
+    if powers in [(2, 0, 0), (1, 1, 0), (1, 0, 1), (0, 2, 0), (0, 1, 1), (0, 0, 2)]:
+        sym = 'D'
+    if powers in [(3, 0, 0), (2, 1, 0), (2, 0, 1), (1, 2, 0),
+                  (1, 1, 1), (1, 0, 2), (0, 3, 0), (0, 2, 1), (0, 1, 2), (0, 0, 3)]:
+        sym = 'F'
+
+    return sym
+
+
+def power2xyz(powers):
+    xyz_str = ''
+    xyz_types = ['x', 'y', 'z']
+    for indx, i in enumerate(powers):
+        if i > 0:
+            if i == 1:
+                xyz_str += xyz_types[indx]
+            else:
+                xyz_str += "%s^%d" % (xyz_types[indx], i)
+    return xyz_str
+
+
+def atno2type(atno):
+    attype = ['X', 'H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O',
+              'F', 'Ne', 'Na', 'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar']
+    return attype[atno]
+
+
+def get_orbitalInfo(mol, basis_set):
+
+    bfs = getbasis(mol, basis_set)
+    g_basis = [[] for i in mol.atoms]
+
+    for i_bf in range(len(bfs)):
+        bf = bfs[i_bf]
+        cgbf = (power2sym(bf.powers), power2xyz(bf.powers), [])
+        for prim in bf.prims:
+            cgbf[2].append((prim.exp, prim.coef))
+        g_basis[bf.atid].append(cgbf)
+
+    return g_basis, len(bfs)
+
+
+def get_orbitalList(mol, basis_set):
+
+    bfs = getbasis(mol, basis_set)
+    g_basis = [[] for i in mol.atoms]
+
+    for i_bf in range(len(bfs)):
+        bf = bfs[i_bf]
+        cgbf = (power2sym(bf.powers),  [])
+        for prim in bf.prims:
+            cgbf[1].append((prim.exp, prim.coef))
+        g_basis[bf.atid].append(cgbf)
+
+    return g_basis
+
+
+def print_orbitalInfo(mol, basis_set):
+    """"" Print infomation on a basis set , like number of basis functions,
+    symmetry type of the orbtials and gaussian decomposition of the orbitals.
+
+    INPUTS:
+    mol --> a Pyquante.Molecule object
+    basis_set --> a string indicating the type of basis set
+    """""
+
+    g_basis, nbfs = get_orbitalInfo(mol, basis_set)
+
+    print("Molecule is using %d basis functions" % (nbfs))
+    for i, atom in enumerate(mol.atoms):
+        print("Atom %s, #%d" % (atno2type(atom.atno), i + 1))
+        for one_basis in g_basis[i]:
+            print("\t Orbital type %s %s, built with %d gaussians:" %
+                  (one_basis[0], one_basis[1], len(one_basis[2])))
+            for one_g in one_basis[2]:
+                print("\t \t exp = %5.5f , coef = %5.5f" %
+                      (one_g[0], one_g[1]))
+    return
+
+
+def print_mo_overview(mol, orbe, orbs, basis_set):
+    """"" Print infomation on a basis set , like number of basis functions,
+    symmetry type of the orbtials and gaussian decomposition of the orbitals.
+
+    INPUTS:
+    mol --> a Pyquante.Molecule object
+    basis_set --> a string indicating the type of basis set
+    """""
+
+    g_basis, nbfs = get_orbitalInfo(mol, basis_set)
+
+    print("Molecule is using %d basis functions" % (nbfs))
+    for i, atom in enumerate(mol.atoms):
+        print("Atom %s, #%d" % (atno2type(atom.atno), i + 1))
+        for one_basis in g_basis[i]:
+            print("\t Orbital type %s %s, built with %d gaussians:" %
+                  (one_basis[0], one_basis[1], len(one_basis[2])))
+            for one_g in one_basis[2]:
+                print("\t \t exp = %5.5f , coef = %5.5f" %
+                      (one_g[0], one_g[1]))
+    return
+
+
+def view_orbital(mol,  basis_set, orbs, iso_level):
+    mol_xyz = []
+    mol_type = []
+    for atom in mol.atoms:
+        mol_type.append(atno2type(atom.atno))
+        mol_xyz.append(atom.r)
+    mol_xyz = np.array(mol_xyz)
+
+    #mol_xyz -= np.mean(mol_xyz, axis=0)
+
+    g_basis = get_orbitalList(mol, basis_set)
+    #bfs = getbasis(mol, basis_set)
+
+    #def f(x, y, z):
+        #print(x, y, z)
+
+     #   fxyz = np.zeros(x.shape)
+       # for xx in x
+      #  for ix, xx in enumerate(x[0, :, 0]):
+        #    for iy, yy in enumerate(y[:, 0, 0]):
+          #      for iz, zz in enumerate(z[0, 0, :]):
+            #        fxyz[ix, iy, iz] = sum( orbs[ibf] * bfs[ibf].amp(xx, yy, zz) for ibf in range(len(bfs)))
+        #fxyz = np.abs(fxyz)**2
+        #return fxyz
+
+    f = molecular_orbital(mol_xyz / 10, orbs, g_basis)
+
+ #   def f(x, y, z, coords=coords, mocoeffs=mocoeffs, gbasis=gbasis):
+
+    mv = MolecularViewer(mol_xyz/10 , {'atom_types': mol_type})
+    mv.ball_and_sticks(ball_radius=0.02,)
+    mv.add_isosurface(
+        f, isolevel=iso_level, color=0xff0000, resolution=64, style='transparent')
+    mv.add_isosurface(
+        f, isolevel=iso_level*2, color=0xcc0011, resolution=64, style='transparent')
+    mv.add_isosurface(
+        f, isolevel=iso_level*4, color=0xaa0033, resolution=64, style='transparent')
+    mv.add_isosurface(
+        f, isolevel=iso_level*6, color=0x880055, resolution=64, style='transparent')
+    mv.add_isosurface(
+        f, isolevel=-iso_level, color=0x0000ff, resolution=64, style='transparent')
+    mv.add_isosurface(
+        f, isolevel=-iso_level*2, color=0x1100cc, resolution=64, style='transparent')
+    mv.add_isosurface(
+        f, isolevel=-iso_level*4, color=0x3300aa, resolution=64, style='transparent')
+    mv.add_isosurface(
+        f, isolevel=-iso_level*6, color=0x550088, resolution=64, style='transparent')
+    return mv
 
 if __name__ == "__main__":
     print("Load me as a module please")
