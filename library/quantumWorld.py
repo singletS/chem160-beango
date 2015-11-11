@@ -11,8 +11,8 @@ or if you just want to import a single function
 from quantumWorld import usefulFunctionName
 
 '''
-from chemlab.qc import molecular_orbital
-from chemview import MolecularViewer
+#from chemlab.qc import molecular_orbital
+#from chemview import MolecularViewer
 
 from IPython.display import display, HTML
 from tempfile import NamedTemporaryFile
@@ -1080,31 +1080,31 @@ def print_mo_overview(mol, orbe, orbs, basis_set):
     return
 
 
-def visualize_orbital(mol_xyz, atom_type, basis_set, orbs, iso_level=0.15):
-    """""  To be used for visualzing Molecular Orbitals.
-        Assumes you have chemview loaded.
+# def visualize_orbital(mol_xyz, atom_type, basis_set, orbs, iso_level=0.15):
+#     """""  To be used for visualzing Molecular Orbitals.
+#         Assumes you have chemview loaded.
 
-    INPUTS:
-    mol_xzy --> a list of xyz positions (e.g [[0,0,0],[0,0,1.4])
-    atom_type --> a list of atom types (e.g. 'C' or 'O')
-    basis_set --> list of basis function information.
-        orbitals --> a vector of mo coeficients, note this is not a matrix but a vector so you might want to use slicing notation (e.g. orbs[:,indx]) to retrieve a specific column for visualization.
-    iso_level -->  the coefficient to use for constructing the isosurface
-    """""
-    # make molecular orbitals
-    f = molecular_orbital(mol_xyz / 10.0, orbs, basis_set)
-    # make viewer
-    mv = MolecularViewer(mol_xyz / 10.0, {'atom_types': atom_type})
-    # normal view
-    mv.ball_and_sticks(ball_radius=0.02,)
-    # add isosurfaces
-    mv.add_isosurface(
-        f, isolevel=iso_level, color=0xff0000, resolution=32, style='wireframe')
+#     INPUTS:
+#     mol_xzy --> a list of xyz positions (e.g [[0,0,0],[0,0,1.4])
+#     atom_type --> a list of atom types (e.g. 'C' or 'O')
+#     basis_set --> list of basis function information.
+#         orbitals --> a vector of mo coeficients, note this is not a matrix but a vector so you might want to use slicing notation (e.g. orbs[:,indx]) to retrieve a specific column for visualization.
+#     iso_level -->  the coefficient to use for constructing the isosurface
+#     """""
+#     # make molecular orbitals
+#     f = molecular_orbital(mol_xyz / 10.0, orbs, basis_set)
+#     # make viewer
+#     mv = MolecularViewer(mol_xyz / 10.0, {'atom_types': atom_type})
+#     # normal view
+#     mv.ball_and_sticks(ball_radius=0.02,)
+#     # add isosurfaces
+#     mv.add_isosurface(
+#         f, isolevel=iso_level, color=0xff0000, resolution=32, style='wireframe')
 
-    mv.add_isosurface(
-        f, isolevel=-iso_level, color=0x0000ff, resolution=32, style='wireframe')
+#     mv.add_isosurface(
+#         f, isolevel=-iso_level, color=0x0000ff, resolution=32, style='wireframe')
 
-    return mv
+#     return mv
 
 
 def save_hf_data(mol, basis_set, orbs):
