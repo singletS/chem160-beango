@@ -1171,5 +1171,76 @@ def symmetric_orthogonalization(A):
 
     return X, AOrth
 
+def bandgap_to_rgb(gap):
+    '''This converts a given wavelength of light to an
+    approximate RGB color value. The wavelength must be given
+    in nanometers in the range from 380 nm through 750 nm
+    (789 THz through 400 THz).
+
+    Based on code by Dan Bruton
+    http://www.physics.sfasu.edu/astro/color/spectra.html
+
+    INPUTS:
+    bandgap --> bandgap of a molecule
+    '''
+    wavelength=1239.84187/ gap
+    w = int(wavelength)
+
+    # colour
+    if w >= 380 and w < 440:
+        R = -(w - 440.) / (440. - 350.)
+        G = 0.0
+        B = 1.0
+    elif w >= 440 and w < 490:
+        R = 0.0
+        G = (w - 440.) / (490. - 440.)
+        B = 1.0
+    elif w >= 490 and w < 510:
+        R = 0.0
+        G = 1.0
+        B = -(w - 510.) / (510. - 490.)
+    elif w >= 510 and w < 580:
+        R = (w - 510.) / (580. - 510.)
+        G = 1.0
+        B = 0.0
+    elif w >= 580 and w < 645:
+        R = 1.0
+        G = -(w - 645.) / (645. - 580.)
+        B = 0.0
+    elif w >= 645 and w <= 780:
+        R = 1.0
+        G = 0.0
+        B = 0.0
+    else:
+        R = 0.0
+        G = 0.0
+        B = 0.0
+
+    # intensity correction
+    if w >= 380 and w < 420:
+        SSS = 0.3 + 0.7*(w - 350) / (420 - 350)
+    elif w >= 420 and w <= 700:
+        SSS = 1.0
+    elif w > 700 and w <= 780:
+        SSS = 0.3 + 0.7*(780 - w) / (780 - 700)
+    else:
+        SSS = 0.0
+    SSS *= 255
+
+    return [int(SSS*R), int(SSS*G), int(SSS*B)]
+
+def drawColor(color):
+
+    plt.figure(figsize=(0.5,0.5))
+    im = np.zeros((20,20,3))
+    im[:,:,0]=color[0]/255.0
+    im[:,:,1]=color[1]/255.0
+    im[:,:,2]=color[2]/255.0
+    plt.imshow(im)
+    plt.axis('off')
+    plt.show()
+
+    return
+
 if __name__ == "__main__":
     print("Load me as a module please")
